@@ -1,0 +1,37 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* DEFINE VARIABLES */
+:root {
+  /* CHOSEN DESIGN COLORS */
+  --c-light-periwrinkle: hsl(240, 100%, 86%);
+  --c-light-tropicalindigo: hsl(249, 100%, 75%);
+  --c-light-ghostwhite: hsl(248, 100%, 98%);
+  --c-light-peach: hsl(36, 100%, 67%);
+  --c-light-peach-light: hsl(36, 100%, 90%);
+  --c-light-tiffanyblue: hsl(170, 64%, 69%);
+  --c-light-brightpink: hsl(349, 100%, 69%);
+  --c-light-text: hsl(0, 0%, 0%);
+
+  /* COLOR VARIABLES IN DOCUMENT */
+  --c-accent-bg: var(--c-light-peach);
+  --c-accent-text: var(--c-light-text);
+  --c-bg: var(--c-light-ghostwhite);
+  --c-button-border: var(--c-light-peach-light);
+  --c-button-face: var(--c-light-peach);
+  --c-button-text: var(--c-light-text);
+  --c-canvas-primary: var(--c-light-tropicalindigo);
+  --c-canvas-highlight: var(--c-light-periwrinkle);
+  --c-canvas-text: var(--c-light-text);
+  --c-link-active-text: ;
+  --c-link-hover-text: ;
+  --c-input-bg: var(--c-light-ghostwhite);
+  --c-input-border: var(--c-light-periwrinkle);
+  --c-succes: var(--c-light-tiffanyblue);
+  --c-danger: var(--c-light-brightpink);
+  --c-transparent: hsl(0, 0%, 0%, 0%);
+}
