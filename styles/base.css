@@ -1,0 +1,68 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* VARIABLES */
+:root {
+  /* CHOSEN DESIGN COLORS */
+  --c-cluedo-brown: hsl(30, 58%, 53%);
+  --c-light-text: hsl(0, 0%, 0%);
+
+  /* COLOR VARIABLES IN DOCUMENT */
+  --c-accent-bg: var(--c-light-peach);
+  --c-accent-text: var(--c-light-text);
+  --c-bg: var(--c-light-ghostwhite);
+  --c-button-border: var(--c-light-peach-light);
+  --c-button-face: var(--c-light-peach);
+  --c-button-text: var(--c-light-text);
+  --c-canvas-primary: var(--c-cluedo-brown);
+  --c-canvas-highlight: var(--c-light-periwrinkle);
+  --c-canvas-text: var(--c-light-text);
+  --c-link-active-text: ;
+  --c-link-hover-text: ;
+  --c-input-bg: var(--c-light-ghostwhite);
+  --c-input-border: var(--c-light-periwrinkle);
+  --c-succes: var(--c-light-tiffanyblue);
+  --c-danger: var(--c-light-brightpink);
+  --c-transparent: hsl(0, 0%, 0%, 0%);
+}
+
+.fullpage {
+  background-color: var(--c-canvas-primary);
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 50px;
+}
+
+h1 {
+  font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 56px;
+}
+
+h2 {
+  font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 36px;
+  margin: 16px;
+}
+
+h3 {
+  font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 22px;
+  margin: 16px;
+}
+
+p {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+}
+
+.child-mode h1,
+.child-mode h2,
+.child-mode h3 {
+  font-family: "Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}

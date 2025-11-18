@@ -1,0 +1,65 @@
+#welcome {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  column-gap: 20px;
+  justify-items: center;
+  align-items: stretch;
+  text-align: center;
+
+  & section:first-of-type {
+    grid-area: 1 / 1 / 2 / 5;
+    display: grid;
+    column-gap: 20px;
+
+    & img {
+      grid-area: 1 / 1 / 2 / 2;
+      width: 100px;
+      height: 100px;
+    }
+
+    & div:first-of-type {
+      grid-area: 1 / 2 / 2 / 5;
+    }
+
+    & div:last-of-type {
+      grid-area: 2 / 1 / 3 / 5;
+    }
+  }
+
+  & div:not(section div) {
+    border: 2px solid;
+    border-radius: 3px;
+    padding: 10px;
+    width: 400px;
+    justify-items: center;
+    cursor: pointer;
+  }
+
+  & div:first-of-type {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  & div:last-of-type {
+    grid-area: 2 / 3 / 3 / 4;
+  }
+}
+
+.mode_image {
+  height: 200px;
+  display: block;
+  margin: auto;
+}
+
+h3 {
+  justify-self: center;
+}
+
+#adult-mode h2 {
+  font-family: "Oooh Baby", Georgia, "Times New Roman", Times, serif;
+}
+
+#kids-mode h2 {
+  font-family: "Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode",
+    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}

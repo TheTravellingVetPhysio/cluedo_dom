@@ -9,28 +9,62 @@
       content="A mystery game for playful humans of all ages - a school project"
     />
     <link rel="icon" href="favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="base.css" type="text/css" />
-    <title>A mystery game for playful humans of all ages - a school project</title>
+    <link rel="stylesheet" href="styles/base.css" type="text/css" />
+    <link rel="stylesheet" href="styles/welcome.css" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Oooh+Baby&family=Reenie+Beanie&display=swap"
+      rel="stylesheet"
+    />
+    <title>
+      A mystery game for playful humans of all ages - a school project
+    </title>
+    <script src="game.js"></script>
   </head>
   <body>
-<div id="welcome">
+    <div id="welcome" class="fullpage">
+      <section>
+        <img src="media/cluedo.png" alt="Mansion under magnifying glass" />
+        <div><h1>Cluedo - a mystery school project</h1></div>
+        <div>
+          <p>
+            Put your detective skills to the test in this fun online mystery
+            challenge.
+          </p>
+          <p>You need to find the culprit before time runs out!</p>
+          <h3>Choose your version below by clicking the image!</h3>
+        </div>
+      </section>
+      <div id="adult-mode">
+        <img
+          src="media/adult.png"
+          class="mode_image"
+          alt="Choose adult mode"
+        />
+        <h2>Solve a mystery murder</h2>
+      </div>
+      <div id="kids-mode">
+        <img
+          src="media/kids.png"
+          class="mode_image"
+          alt="Choose kids mode"
+        />
+        <h2>Solve the mystery of a broken toy</h2>
+      </div>
+    </div>
 
-</div>
+    <div id="setup" class="fullpage"></div>
 
-<div id="setup">
+    <div id="gameintro" class="fullpage">
+      <div>
+        <img src="media/note.png" />
+        <p></p>
+      </div>
+    </div>
 
+    <div id="gameplay" class="fullpage"></div>
 
-</div>
-
-<div id="gameplay">
-
-
-</div>
-
-<div id="results">
-
-  
-</div>
-
+    <div id="results" class="fullpage"></div>
   </body>
 </html>
