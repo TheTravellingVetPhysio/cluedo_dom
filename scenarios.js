@@ -1,5 +1,5 @@
 export const gameScenario = {
-  adult: {
+  adults: {
     suspects: [
       "Miss Scarlett",
       "Reverend Green",
@@ -66,7 +66,7 @@ export const gameScenario = {
     },
   },
 
-  child: {
+  kids: {
     suspects: [
       "Miss Scarlett",
       "Reverend Green",
