@@ -30,12 +30,45 @@
   --c-transparent: hsl(0, 0%, 0%, 0%);
 }
 
-.fullpage {
+body {
   background-color: var(--c-canvas-primary);
+  min-height: 100vh;
   width: 100vw;
   max-width: 100%;
-  min-height: 100vh;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: var(--c-canvas-primary);
+  flex: 0 0 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 20px;
+
+  & img {
+    width: 100px;
+    height: 100px;
+  }
+
+  & div {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+main > div {
+  flex: 1;
+  height: 100%;
 }
 
 h1 {
@@ -46,13 +79,11 @@ h1 {
 h2 {
   font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 36px;
-  margin: 16px;
 }
 
 h3 {
   font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 22px;
-  margin: 16px;
 }
 
 p {

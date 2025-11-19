@@ -11,6 +11,7 @@
     <link rel="icon" href="favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="styles/base.css" type="text/css" />
     <link rel="stylesheet" href="styles/welcome.css" type="text/css" />
+    <link rel="stylesheet" href="styles/setup.css" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,46 +24,53 @@
     <script src="./game.js" type="module"></script>
   </head>
   <body>
-    <div id="welcome" class="fullpage">
-      <section>
-        <img src="media/cluedo.png" alt="Mansion under magnifying glass" />
-        <div><h1>Cluedo - a mystery school project</h1></div>
-        <div>
+    <header>
+      <img src="media/cluedo.png" alt="Mansion under magnifying glass" />
+      <div>
+        <h1>Cluedo - a mystery school project</h1>
+        <h3>Coded by Julie Herold, strongly inspired by Clue/Cluedo</h3>
+      </div>
+    </header>
+    <main>
+      <div id="welcome">
+        <section>
           <p>
             Put your detective skills to the test in this fun online mystery
             challenge.
           </p>
           <p>You need to find the culprit before time runs out!</p>
-          <h3>Choose your version below by clicking the image!</h3>
+        </section>
+        <h3>Choose your version below by clicking the image!</h3>
+
+        <div>
+          <div id="adult-mode">
+            <img
+              src="media/adult.png"
+              class="mode_image"
+              alt="Choose adult mode"
+            />
+            <h2>Solve a mystery murder</h2>
+          </div>
+          <div id="kids-mode">
+            <img
+              src="media/kids.png"
+              class="mode_image"
+              alt="Choose kids mode"
+            />
+            <h2>Solve the mystery of a broken toy</h2>
+          </div>
         </div>
-      </section>
-      <div id="adult-mode">
-        <img
-          src="media/adult.png"
-          class="mode_image"
-          alt="Choose adult mode"
-        />
-        <h2>Solve a mystery murder</h2>
       </div>
-      <div id="kids-mode">
-        <img
-          src="media/kids.png"
-          class="mode_image"
-          alt="Choose kids mode"
-        />
-        <h2>Solve the mystery of a broken toy</h2>
+
+      <div id="setup" class="fullpage">
+        <div id="note">
+          <h2 id="intro1"></h2>
+        </div>
       </div>
-      <section><p>Developed by Julie Herold</p></section>
-    </div>
 
-    <div id="setup" class="fullpage">
-      <div id="note">
-        <h2 id="intro1"></h2>
-      </div>
-    </div>
+      <div id="gameplay" class="fullpage"></div>
 
-    <div id="gameplay" class="fullpage"></div>
-
-    <div id="results" class="fullpage"></div>
+      <div id="results" class="fullpage"></div>
+    </main>
   </body>
 </html>
