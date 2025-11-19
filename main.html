@@ -62,15 +62,80 @@
         </div>
       </div>
 
-      <div id="setup" class="fullpage">
-        <div id="note">
-          <h2 id="intro1"></h2>
+      <div id="setup">
+        <div>
+          <div id="note">
+            <h2 id="intro1"></h2>
+          </div>
+          <h3 id="intro2"></h3>
+          <p id="intro3"></p>
+        </div>
+        <div id="playersetup">
+          <fieldset>
+            <legend>Set up players</legend>
+            <div>
+              <p>You can play up to 4 players.</p>
+              <p>Fill in their detective names to activate the player.</p>
+            </div>
+            <form>
+              <img src="media/detective1.png" alt="Detective1" class="icon" />
+              <label for="detective1">Detective</label>
+              <input
+                type="text"
+                id="detective1"
+                name="detective"
+                placeholder="Sherlock Holmes"
+              />
+            </form>
+            <form>
+              <img src="media/detective2.png" alt="Detective2" class="icon" />
+              <label for="detective2">Detective</label>
+              <input
+                type="text"
+                id="detective2"
+                name="detective"
+                placeholder="Nancy Drew"
+              />
+            </form>
+            <form>
+              <img src="media/detective3.png" alt="Detective3" class="icon" />
+              <label for="detective3">Detective</label>
+              <input
+                type="text"
+                id="detective3"
+                name="detective"
+                placeholder="James Bond"
+              />
+            </form>
+            <form>
+              <img src="media/detective4.png" alt="Detective4" class="icon" />
+              <label for="detective4">Detective</label>
+              <input
+                type="text"
+                id="detective4"
+                name="detective"
+                placeholder="Olivia Benson"
+              />
+            </form>
+          </fieldset>
+        </div>
+        <div id="startgamebutton">
+          <h2>Press to play</h2>
+          <img src="media/play.png" alt="Press play to start game" id="btn-play" />
         </div>
       </div>
 
-      <div id="gameplay" class="fullpage"></div>
+      <div id="gameplay">
+        <div id="rules">
+          <h2>Gameplay</h2>
+          <li>
+            <lu>You have 50 turns to solve the mystery</lu>
+            <lu>In each turn you can choose to:</lu>
+          </li>
+        </div>
+      </div>
 
-      <div id="results" class="fullpage"></div>
+      <div id="results"></div>
     </main>
   </body>
 </html>

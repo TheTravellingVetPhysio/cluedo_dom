@@ -69,6 +69,7 @@ main {
 main > div {
   flex: 1;
   height: 100%;
+  padding: 20px;
 }
 
 h1 {
@@ -79,11 +80,13 @@ h1 {
 h2 {
   font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 36px;
+  font-weight: 500;
 }
 
 h3 {
   font-family: Cinzel, Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 22px;
+  font-weight: 600;
 }
 
 p {

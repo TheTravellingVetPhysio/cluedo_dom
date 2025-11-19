@@ -5,7 +5,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   text-align: center;
-  gap: 50px;
+  gap: 20px;
 }
 
 #welcome > div {
