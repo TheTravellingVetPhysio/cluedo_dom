@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles/base.css" type="text/css" />
     <link rel="stylesheet" href="styles/welcome.css" type="text/css" />
     <link rel="stylesheet" href="styles/setup.css" type="text/css" />
+    <link rel="stylesheet" href="styles/gameplay.css" type="text/css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -121,17 +122,33 @@
         </div>
         <div id="startgamebutton">
           <h2>Press to play</h2>
-          <img src="media/play.png" alt="Press play to start game" id="btn-play" />
+          <img
+            src="media/play.png"
+            alt="Press play to start game"
+            id="btn-play"
+          />
         </div>
       </div>
 
       <div id="gameplay">
         <div id="rules">
-          <h2>Gameplay</h2>
-          <li>
-            <lu>You have 50 turns to solve the mystery</lu>
-            <lu>In each turn you can choose to:</lu>
-          </li>
+          <h2>Rules</h2>
+          <p>You have 50 turns to solve the mystery</p>
+          <p>In each turn you can choose to:</p>
+          <ul>
+            <li>Move to a (new) room</li>
+            <li>
+              Research the room you are in and either a suspect or an item
+            </li>
+            <li>Make your final guess of who, where and how</li>
+          </ul>
+          <p>You only have one final guess before time runs out!</p>
+        </div>
+        <div id="turn-stats"></div>
+        <div id="player-list">
+          <h2>Players</h2>
+          <p>Turns used:</p>
+          
         </div>
       </div>
 

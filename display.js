@@ -17,19 +17,14 @@ export function hideSectionsInitially() {
 // =============================
 
 export function transitionToSetup() {
+  console.log("transitionToSetup called");
   document.getElementById("welcome").classList.add("hidden");
   document.getElementById("setup").classList.remove("hidden");
-  document.getElementById("intro1").innerHTML = config.prompts.intro1;
-  document.getElementById("intro1").style.fontFamily =
-    mode === "adults"
-      ? '"Oooh Baby", Georgia, "Times New Roman", Times, serif'
-      : '"Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif';
+
   setTimeout(() => {
-    document.getElementById("intro2").innerHTML = config.prompts.intro2;
     document.getElementById("intro2").classList.remove("hidden");
   }, 2000);
   setTimeout(() => {
-    document.getElementById("intro3").innerHTML = config.prompts.intro3;
     document.getElementById("intro3").classList.remove("hidden");
   }, 3500);
   setTimeout(() => {
@@ -40,3 +35,9 @@ export function transitionToSetup() {
 // =============================
 // 2. SETUP
 // =============================
+
+export function transitionToGameplay() {
+  console.log("transitionToSetup called");
+  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("gameplay").classList.remove("hidden");
+}

@@ -89,9 +89,10 @@ h3 {
   font-weight: 600;
 }
 
-p {
+p, li {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
+  line-height: 130%;
 }
 
 .child-mode h1,
