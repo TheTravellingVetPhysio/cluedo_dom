@@ -49,7 +49,6 @@ function selectMode(selectedMode) {
   }, 3500);
   setTimeout(() => {
     document.getElementById("playersetup").classList.remove("hidden");
-    document.getElementById("startgamebutton").classList.remove("hidden");
   }, 5000);
 }
 
@@ -58,6 +57,23 @@ function selectMode(selectedMode) {
 // =========================
 
 // TO DO: import players
+
+const inputs = document.querySelectorAll('#playersetup input[type="text"]');
+const playButton = document.getElementById('startgamebutton');
+
+function checkInputs() {
+  const hasValue = Array.from(inputs).some(input => input.value.trim() !== '');
+  if (hasValue) {
+    playButton.classList.remove('hidden');
+  }
+  else {
+    playButton.classList.add('hidden')
+  }
+}
+
+inputs.forEach(input => {
+  input.addEventListener('input', checkInputs);
+});
 
 /* function startGame() {
   const game = new CluedoGame(config, players);

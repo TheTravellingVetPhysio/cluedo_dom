@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   padding: 90px 20px 20px 50px;
-  transform: rotate(10deg);
+  transform: rotate(8deg);
 }
 
 #setup {
@@ -33,8 +33,9 @@
   object-fit: contain;
 }
 
-#setup img {
+#btn-play {
   max-width: 100px;
+  cursor: pointer;
 }
 
 fieldset {
