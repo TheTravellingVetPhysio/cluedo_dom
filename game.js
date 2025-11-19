@@ -1,20 +1,11 @@
 import { gameScenario } from "./scenarios.js";
-
-// =========================
-// 0. HIDDEN ELEMENTS
-// =========================
-
-document.getElementById("setup").classList.add("hidden");
-document.getElementById("gameplay").classList.add("hidden");
-document.getElementById("results").classList.add("hidden");
-document.getElementById("intro2").classList.add("hidden");
-document.getElementById("intro3").classList.add("hidden");
-document.getElementById("playersetup").classList.add("hidden");
-document.getElementById("startgamebutton").classList.add("hidden");
+import * as display from "./display.js";
 
 // =========================
 // 1. SELECT MODE
 // =========================
+
+display.hideSectionsInitially();
 
 let mode = null;
 let config = null;
