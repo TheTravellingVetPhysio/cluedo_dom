@@ -1,3 +1,43 @@
-li {
-    list-style: inside;
+#gameplay {
+  display: grid;
+  grid-template-columns: 1fr auto 500px 1fr;
+  gap: 20px;
+  justify-items: left;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#gameboard {
+  display: relative;
+}
+
+#clue-board {
+  width: 500px;
+  display: block;
+}
+
+#player-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#player-list > h2:first-of-type {
+  width: fit-content;
+  border: 3px solid #5f432c;
+  border-radius: 3px;
+  padding: 20px;
+  align-self: center;
+}
+
+#actions {
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
 }

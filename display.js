@@ -3,9 +3,10 @@
 // =============================
 
 export function hideSectionsInitially() {
+      document.getElementById("welcome").classList.add("hidden");
   document.getElementById("setup").classList.add("hidden");
-  document.getElementById("gameplay").classList.add("hidden");
-  document.getElementById("results").classList.add("hidden");
+/*   document.getElementById("gameplay").classList.add("hidden");
+ */  document.getElementById("results").classList.add("hidden");
   document.getElementById("intro2").classList.add("hidden");
   document.getElementById("intro3").classList.add("hidden");
   document.getElementById("playersetup").classList.add("hidden");

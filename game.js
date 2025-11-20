@@ -67,11 +67,11 @@ function setupMystery() {
   const mystery = {
     suspect: randomPick(scenario.suspects),
     room: randomPick(scenario.rooms),
-item: randomPick(scenario.items)
+    item: randomPick(scenario.items),
   };
 
-  localStorage.setItem('mystery', JSON.stringify(mystery));
-  console.log('Mystery setup: ', mystery);
+  localStorage.setItem("mystery", JSON.stringify(mystery));
+  console.log("Mystery setup: ", mystery);
   return mystery;
 }
 
@@ -97,19 +97,51 @@ playButton.addEventListener("click", () => {
 
   setupMystery();
 
+  document.querySelector("#player-list h2").style.fontFamily =
+    mode === "adults"
+      ? '"Oooh Baby", Georgia, "Times New Roman", Times, serif'
+      : '"Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif';
+
   display.transitionToGameplay();
 });
-
-/* function startGame() {
-  const game = new CluedoGame(scenario, players);
-  game.start();
-  document.getElementById("setup").style.display = "none";
-  document.getElementById("gameplay").style.display = "block";
-} */
 
 // =========================
 // 3. GAMEPLAY
 // =========================
+
+// Shows player list
+function showPlayers() {
+  const players = JSON.parse(localStorage.getItem("players"));
+
+  const playerListDiv = document.querySelector("#player-list div");
+
+  playerListDiv.innerHTML = "";
+
+  players.forEach((player) => {
+    const playerDiv = document.createElement("div");
+    playerDiv.classList.add("player");
+
+    const img = document.createElement("img");
+    img.src = player.avatar;
+    img.alt = player.name;
+    img.classList.add("avatar");
+
+    const name = document.createElement("h3");
+    name.textContent = "Detective " + player.name;
+
+    if (player.isCurrentTurn){
+      const arrow = document.createElement("img");
+      arrow.src = "media/play.png";
+      arrow.alt = "Current turn";
+      arrow.classList.add("turn-arrow");
+      playerDiv.insertBefore(arrow, img);
+    };
+
+    playerDiv.appendChild(img);
+    playerDiv.appendChild(name);
+    playerListDiv.appendChild(playerDiv);
+  });
+}
 
 // =========================
 // 4. FINISH

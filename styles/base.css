@@ -89,10 +89,10 @@ h3 {
   font-weight: 600;
 }
 
-p, li {
+p, ul {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
-  line-height: 130%;
+  margin: 10px;
 }
 
 .child-mode h1,
@@ -104,4 +104,8 @@ p, li {
 
 .hidden {
   display: none !important;
+}
+
+li {
+    list-style: inside;
 }

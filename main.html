@@ -129,26 +129,58 @@
           />
         </div>
       </div>
-
-      <div id="gameplay">
-        <div id="rules">
-          <h2>Rules</h2>
-          <p>You have 50 turns to solve the mystery</p>
-          <p>In each turn you can choose to:</p>
-          <ul>
-            <li>Move to a (new) room</li>
-            <li>
-              Research the room you are in and either a suspect or an item
-            </li>
-            <li>Make your final guess of who, where and how</li>
-          </ul>
-          <p>You only have one final guess before time runs out!</p>
-        </div>
-        <div id="turn-stats"></div>
-        <div id="player-list">
-          <h2>Players</h2>
-          <p>Turns used:</p>
-          
+      <div class="wrapper">
+        <div id="gameplay">
+          <div id="rules">
+            <h2>Rules</h2>
+            <p>You have 50 turns to solve the mystery.</p>
+            <p>In each turn you can choose to:</p>
+            <ul>
+              <li>
+                Move to a (new) room by clicking the room you want to move to.
+              </li>
+              <li>
+                Research the room you are in and either a suspect or an item by
+                clicking the magnifying glass.
+              </li>
+              <li>
+                Make your final guess of who, where and how by clicking the
+                question marks.
+              </li>
+            </ul>
+            <p><strong>You only have one final guess!</strong></p>
+            <p>
+              If your guess is wrong you are out (and if you are the last
+              detective the game ends and the culprit goes free)!
+            </p>
+            <p>If your guess is correct you win and the culprit is caught.</p>
+          </div>
+          <div id="actions">
+            <img
+              src="media/turn_research_suspect.png"
+              id="turn-research-suspect"
+              alt="Research room and suspect"
+            />
+            <img
+              src="media/turn_research_item.png"
+              id="turn-research-item"
+              alt="Research room and item"
+            />
+            <img
+              src="media/turn_final_guess.png"
+              id="turn-final-guess"
+              alt="Make your final guess"
+            />
+          </div>
+          <div id="gameboard">
+            <img src="media/clue_board.jpg" id="clue-board" />
+          </div>
+          <div id="player-list">
+            <h2>Turns used:</h2>
+            <h2>Players</h2>
+            <div>
+            </div>
+          </div>
         </div>
       </div>
 
