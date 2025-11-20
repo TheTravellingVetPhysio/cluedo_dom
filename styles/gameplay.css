@@ -44,6 +44,15 @@
   justify-content: space-around;
 }
 
+#avatars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; 
+}
+
 #gameplay .player {
   display: flex;
   flex-direction: row;
@@ -76,6 +85,7 @@ ul {
  */
 #gameboard > div {
   position: absolute;
+  cursor: pointer;
 }
 
 #conservatory {

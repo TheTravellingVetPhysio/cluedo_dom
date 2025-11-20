@@ -106,13 +106,14 @@ playButton.addEventListener("click", () => {
   display.transitionToGameplay();
 
   showPlayers();
+  placeAvatars();
 });
 
 // =========================
 // 3. GAMEPLAY
 // =========================
 
-// Shows player list
+// SHOWS PLAYER LIST
 function showPlayers() {
   const players = JSON.parse(localStorage.getItem("players")) || [];
 
@@ -149,35 +150,67 @@ function showPlayers() {
   });
 }
 
-// Place avatars on gameboard
+// PLACE AVATARS ON GAME BOARD
 function placeAvatars() {
   const players = JSON.parse(localStorage.getItem("players")) || [];
   const container = document.getElementById("avatars-container");
   container.innerHTML = "";
 
   // Group players by position
-  const groups = {};
+  const playerGroups = {};
   for (let i = 0; i < players.length; i++) {
     const playerPosition = players[i].position;
-    
+    if (!playerGroups[playerPosition]) playerGroups[playerPosition] = [];
+    playerGroups[playerPosition].push(players[i]);
   }
 
-  players.forEach((player) => {
-    const avatar = document.createElement("img");
-  avatar.src = player.avatar;
-  avatar.alt = player.name;
-  avatar.classList.add("avatar");
+  // Render avatars with offsets
+  for (const playerPosition in playerGroups) {
+    const group = playerGroups[playerPosition];
+    for (let i = 0; i < group.length; i++) {
+      const player = group[i];
+      const avatar = document.createElement("img");
+      avatar.src = player.avatar;
+      avatar.alt = player.name;
+      avatar.classList.add("avatar");
+      avatar.style.position = "absolute";
 
-  if (player.position === 0) {
-    avatar.style.position = "absolute";
-    avatar.style.top = "50%";
-    avatar.style.left = "50%";
-    avatar.style.transform = "translate (-50%, -50%)"; }
-    else {
-      const roomDiv
+      if (playerPosition === "0") {
+        const centerX = 50;
+        const centerY = 50;
+        const radius = 35;
+        const angle = (i / group.length) * 2 * Math.PI;
+        avatar.style.left = `calc(${centerX}% + ${Math.cos(angle) * radius}px)`;
+        avatar.style.top = `calc(${centerY}% + ${Math.sin(angle) * radius}px)`;
+        avatar.style.transform = "translate(-50%,-50%)";
+      } else {
+        const roomDiv = document.querySelector(
+          `[data-room="${playerPosition}"]`
+        );
+        if (roomDiv) {
+          const roomDivDimensions = roomDiv.getBoundingClientRect();
+          const boardDimensions = document
+            .getElementById("gameboard")
+            .getBoundingClientRect();
+          const roomCenterX =
+            roomDivDimensions.left -
+            boardDimensions.left +
+            roomDivDimensions.width / 2;
+          const roomCenterY =
+            roomDivDimensions.top -
+            boardDimensions.top +
+            roomDivDimensions.height / 2;
+          const radius = 30;
+          const angle = (i / group.length) * 2 * Math.PI;
+
+          avatar.style.left = `${roomCenterX + Math.cos(angle) * radius}px`;
+          avatar.style.top = `${roomCenterY + Math.sin(angle) * radius}px`;
+          avatar.style.transform = "translate(-50%, -50%)";
+        }
+      }
+      container.appendChild(avatar);
     }
   }
-  });
 }
 
 function moveToRoom(roomName) {
@@ -188,6 +221,7 @@ function moveToRoom(roomName) {
   players[currentPlayerIndex].position = roomName;
   localStorage.setItem("players", JSON.stringify(players));
   console.log(`Player moved to: ${roomName}`);
+  placeAvatars();
 }
 
 function guessSuspect() {}
