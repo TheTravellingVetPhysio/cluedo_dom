@@ -103,6 +103,8 @@ playButton.addEventListener("click", () => {
       : '"Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif';
 
   display.transitionToGameplay();
+
+  showPlayers();
 });
 
 // =========================
@@ -134,7 +136,7 @@ function showPlayers() {
       arrow.src = "media/play.png";
       arrow.alt = "Current turn";
       arrow.classList.add("turn-arrow");
-      playerDiv.insertBefore(arrow, img);
+      playerDiv.prepend(arrow, img);
     };
 
     playerDiv.appendChild(img);
