@@ -97,7 +97,7 @@ playButton.addEventListener("click", () => {
 
   setupMystery();
 
-  document.querySelector("#player-list h2").style.fontFamily =
+  document.querySelector("#players-section h2").style.fontFamily =
     mode === "adults"
       ? '"Oooh Baby", Georgia, "Times New Roman", Times, serif'
       : '"Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif';
@@ -115,7 +115,7 @@ playButton.addEventListener("click", () => {
 function showPlayers() {
   const players = JSON.parse(localStorage.getItem("players"));
 
-  const playerListDiv = document.querySelector("#player-list div");
+  const playerListDiv = document.querySelector("#player-list");
 
   playerListDiv.innerHTML = "";
 
@@ -131,14 +131,17 @@ function showPlayers() {
     const name = document.createElement("h3");
     name.textContent = "Detective " + player.name;
 
+    const arrow = document.createElement("img");
+    arrow.classList.add("turn-arrow");
+    
     if (player.isCurrentTurn){
-      const arrow = document.createElement("img");
       arrow.src = "media/play.png";
       arrow.alt = "Current turn";
-      arrow.classList.add("turn-arrow");
-      playerDiv.prepend(arrow, img);
+    } else {
+      arrow.style.width = "30px";
     };
-
+    
+    playerDiv.append(arrow);
     playerDiv.appendChild(img);
     playerDiv.appendChild(name);
     playerListDiv.appendChild(playerDiv);

@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0px;
 }
 
 #gameboard {
@@ -20,18 +21,18 @@
   display: block;
 }
 
-#player-list {
+#players-section {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-#player-list > h2:first-of-type {
+#players-section > h2:first-of-type {
   width: fit-content;
   border: 3px solid #5f432c;
   border-radius: 3px;
-  padding: 20px;
+  padding: 10px;
   align-self: center;
 }
 
@@ -40,4 +41,30 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
+}
+
+#gameplay .player {
+display: flex;
+flex-direction: row;
+margin: 20px; 
+align-items: center;
+gap: 10px;
+}
+
+.avatar {
+  height: 50px;
+  object-fit: contain;
+}
+
+.turn-arrow {
+      width: 30px;
+  object-fit: contain;
+}
+
+.turn-arrow[src=""] {
+    visibility: hidden;
+}
+
+#gameplay p, ul {
+    font-size: 16px;
 }
