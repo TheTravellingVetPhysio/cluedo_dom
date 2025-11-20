@@ -13,12 +13,13 @@
 }
 
 #gameboard {
-  display: relative;
+  position: relative;
 }
 
 #clue-board {
   width: 500px;
   display: block;
+  z-index: 0;
 }
 
 #players-section {
@@ -44,27 +45,107 @@
 }
 
 #gameplay .player {
-display: flex;
-flex-direction: row;
-margin: 20px; 
-align-items: center;
-gap: 10px;
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  align-items: center;
+  gap: 10px;
 }
 
 .avatar {
   height: 50px;
   object-fit: contain;
+  z-index: 2;
 }
 
 .turn-arrow {
-      width: 30px;
+  width: 30px;
   object-fit: contain;
 }
 
 .turn-arrow[src=""] {
-    visibility: hidden;
+  visibility: hidden;
 }
 
-#gameplay p, ul {
-    font-size: 16px;
+#gameplay p,
+ul {
+  font-size: 16px;
+}
+
+/* Room placements
+ */
+#gameboard > div {
+  position: absolute;
+}
+
+#conservatory {
+  z-index: 1;
+  top: 15px;
+  left: 25px;
+  height: 110px;
+  width: 135px;
+}
+
+#ball_room {
+  z-index: 1;
+  top: 15px;
+  left: 180px;
+  height: 145px;
+  width: 155px;
+}
+
+#kitchen {
+  z-index: 1;
+  top: 35px;
+  left: 355px;
+  height: 130px;
+  width: 130px;
+}
+
+#billiard_room {
+  z-index: 1;
+  top: 140px;
+  left: 15px;
+  height: 105px;
+  width: 135px;
+}
+
+#library {
+  z-index: 1;
+  top: 270px;
+  left: 15px;
+  height: 115px;
+  width: 165px;
+}
+
+#dining_room {
+  z-index: 1;
+  top: 210px;
+  left: 335px;
+  height: 125px;
+  width: 155px;
+}
+
+#study {
+  z-index: 1;
+  top: 405px;
+  left: 20px;
+  height: 95px;
+  width: 160px;
+}
+
+#hall {
+  z-index: 1;
+  top: 360px;
+  left: 200px;
+  height: 145px;
+  width: 135px;
+}
+
+#lounge {
+  z-index: 1;
+  top: 390px;
+  left: 355px;
+  height: 110px;
+  width: 135px;
 }

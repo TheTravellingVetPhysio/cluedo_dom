@@ -26,30 +26,24 @@ export const gameScenario = {
         "I left you a clue... Or a body. Either way, I'm just getting started...",
       intro2: "A murder! Who? Where? How?",
       intro3: "It's your job to find out before another murder happens!",
-      turn_research_suspect:
+      /* turn_research_suspect:
         "Use your detective skills to research a suspect and the room you are in.",
       turn_research_item:
         "Use your detective skills to research a weapon and the room you are in.",
       turn_solve_mystery:
-        "Solve the mystery (but BEWARE! if your guess is wrong you are out)...",
+        "Solve the mystery (but BEWARE! if your guess is wrong you are out)...", */
       guess_weapons: "What do you think the murder weapon was?",
       guess_suspect: "Who do you think did the deed?",
       correct_two: "Your detective skills are pristine!",
-      correct_room: (roomName) => {
-        `The crime happened in the ${roomName} and `;
-      },
-      correct_suspect: (suspectName) => {
-        `the culprit was ${suspectName}.`;
-      },
-      correct_item: (itemName) => {
-        `the murder weapon used was ${itemName}.`;
-      },
+      correct_room: (roomName) => `The crime happened in the ${roomName} and `,
+      correct_suspect: (suspectName) => `the culprit was ${suspectName}.`,
+      correct_item: (itemName) => `the murder weapon used was ${itemName}.`,
       correct_one:
         "You're onto something - one detail lines up with the truth, but further investigation seems necessary...",
       correct_none:
-        "Whoopss.. Seems your hunch was completely off. Better luck next time!",
+        "Whoops.. Seems your hunch was completely off. Better luck next time!",
       final_room: "Where do you think the murder happened?",
-      final_suspect: "Who do you believe comitted the crime?",
+      final_suspect: "Who do you believe committed the crime?",
       final_item: "Which weapon do you think is the murder weapon?",
       list_rooms: "Possible crime scenes: ",
       list_suspects: "Lineup of suspects in the mansion: ",
@@ -58,9 +52,8 @@ export const gameScenario = {
         "Ouch! I guess your detective skills could use some more ... refinement... You're out!",
       all_eliminated:
         "All detectives have been eliminated... The mystery remains unsolved and the murderer/murderess goes free...",
-      mysterySolved: (winnerName, suspectName, roomName, itemName) => {
-        `YAY! Detective ${winnerName} solved the mystery! It was ${suspectName} in the ${roomName} with the ${itemName}.`;
-      },
+      mysterySolved: (winnerName, suspectName, roomName, itemName) =>
+        `YAY! Detective ${winnerName} solved the mystery! It was ${suspectName} in the ${roomName} with the ${itemName}.`,
       new_crime:
         "Time slipped through your fingers... and the killer didn't waste a second. Another body lies cold, and the mansion trembles with fear. A new mystery begins — will you stop the murderer before they strike again?",
     },
@@ -99,24 +92,18 @@ export const gameScenario = {
       intro1: "Sorry, I broke the toy! I didn't mean to...",
       intro2: "What toy? Where is it? Who broke it?",
       intro3: "It's your job to find out before another toy is broken!",
-      turn_research_suspect:
+      /* turn_research_suspect:
         "Use your detective skills to research a suspect and the room you are in.",
       turn_research_item:
         "Use your detective skills to research a toy and the room you are in.",
       turn_solve_mystery:
-        "Solve the mystery (but BEWARE! if your guess is wrong you are out)...",
+        "Solve the mystery (but BEWARE! if your guess is wrong you are out)...", */
       guess_weapons: "Which toy do you think got broken?",
       guess_suspect: "Who do you think caused the mischief?",
       correct_two: "Your detective skills are pristine!",
-      correct_room: (roomName) => {
-        `The crime happened in the ${roomName} and `;
-      },
-      correct_suspect: (suspectName) => {
-        `the culprit was ${suspectName}.`;
-      },
-      correct_item: (itemName) => {
-        `the broken toy was ${itemName}.`;
-      },
+      correct_room: (roomName) => `The crime happened in the ${roomName} and `,
+      correct_suspect: (suspectName) => `the culprit was ${suspectName}.`,
+      correct_item: (itemName) => `the broken toy was ${itemName}.`,
       correct_one:
         "Nice try detective! One clue matches the truth, but the mystery isn't cracked just yet...",
       correct_none:
@@ -131,9 +118,8 @@ export const gameScenario = {
         "Oh no! That guess sent you on a wild goose chase. Time to let other detectives take the lead.",
       all_eliminated:
         "All detectives have been eliminated... The mystery remains unsolved...",
-      mysterySolved: (winnerName, suspectName, roomName, itemName) => {
-        `YAY! Detective ${winnerName} solved the mystery! It was ${suspectName} in the ${roomName} who broke ${itemName}.`;
-      },
+      mysterySolved: (winnerName, suspectName, roomName, itemName) =>
+        `YAY! Detective ${winnerName} solved the mystery! It was ${suspectName} in the ${roomName} who broke ${itemName}.`,
       new_crime:
         "You ran out of time, detective! While you were thinking, another toy got smashed. Grab your magnifying glass — there's a new case to crack!",
     },

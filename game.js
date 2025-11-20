@@ -21,7 +21,8 @@ function selectMode(selectedMode) {
   mode = selectedMode;
   scenario = gameScenario[mode];
 
-  localStorage.setItem("gameMode", mode);
+  /*   localStorage.clear(); make it more specific
+   */ localStorage.setItem("gameMode", mode);
 
   document.getElementById("intro1").style.fontFamily =
     mode === "adults"
@@ -113,7 +114,7 @@ playButton.addEventListener("click", () => {
 
 // Shows player list
 function showPlayers() {
-  const players = JSON.parse(localStorage.getItem("players"));
+  const players = JSON.parse(localStorage.getItem("players")) || [];
 
   const playerListDiv = document.querySelector("#player-list");
 
@@ -133,20 +134,74 @@ function showPlayers() {
 
     const arrow = document.createElement("img");
     arrow.classList.add("turn-arrow");
-    
-    if (player.isCurrentTurn){
+
+    if (player.isCurrentTurn) {
       arrow.src = "media/play.png";
       arrow.alt = "Current turn";
     } else {
       arrow.style.width = "30px";
-    };
-    
+    }
+
     playerDiv.append(arrow);
     playerDiv.appendChild(img);
     playerDiv.appendChild(name);
     playerListDiv.appendChild(playerDiv);
   });
 }
+
+// Place avatars on gameboard
+function placeAvatars() {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+  const container = document.getElementById("avatars-container");
+  container.innerHTML = "";
+
+  // Group players by position
+  const groups = {};
+  for (let i = 0; i < players.length; i++) {
+    const playerPosition = players[i].position;
+    
+  }
+
+  players.forEach((player) => {
+    const avatar = document.createElement("img");
+  avatar.src = player.avatar;
+  avatar.alt = player.name;
+  avatar.classList.add("avatar");
+
+  if (player.position === 0) {
+    avatar.style.position = "absolute";
+    avatar.style.top = "50%";
+    avatar.style.left = "50%";
+    avatar.style.transform = "translate (-50%, -50%)"; }
+    else {
+      const roomDiv
+    }
+  }
+  });
+}
+
+function moveToRoom(roomName) {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+  const currentPlayerIndex = players.findIndex(
+    (player) => player.isCurrentTurn
+  );
+  players[currentPlayerIndex].position = roomName;
+  localStorage.setItem("players", JSON.stringify(players));
+  console.log(`Player moved to: ${roomName}`);
+}
+
+function guessSuspect() {}
+function guessItem() {}
+function finalGuess() {}
+function resetGame() {}
+
+function handleTurn() {}
+
+document.querySelectorAll("[data-room]").forEach((el) => {
+  el.addEventListener("click", (e) => {
+    moveToRoom(e.target.dataset.room);
+  });
+});
 
 // =========================
 // 4. FINISH
