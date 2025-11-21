@@ -2,9 +2,14 @@
 // 0. HIDDEN ELEMENTS FROM START
 // =============================
 
+import { gameScenario } from "./scenarios.js";
+
+function setCurrentSection(section) {
+  localStorage.setItem("currentSection", section);
+}
+
 export function hideSectionsInitially() {
-/*       document.getElementById("welcome").classList.add("hidden");
- */  document.getElementById("setup").classList.add("hidden");
+  document.getElementById("setup").classList.add("hidden");
   document.getElementById("gameplay").classList.add("hidden");
   document.getElementById("intro2").classList.add("hidden");
   document.getElementById("intro3").classList.add("hidden");
@@ -12,7 +17,6 @@ export function hideSectionsInitially() {
   document.getElementById("startgamebutton").classList.add("hidden");
   document.getElementById("popup").classList.add("hidden");
   document.getElementById("overlay").classList.add("hidden");
-
 }
 
 // =============================
@@ -20,6 +24,7 @@ export function hideSectionsInitially() {
 // =============================
 
 export function transitionToSetup() {
+  setCurrentSection("setup");
   console.log("transitionToSetup called");
   document.getElementById("welcome").classList.add("hidden");
   document.getElementById("setup").classList.remove("hidden");
@@ -33,6 +38,7 @@ export function transitionToSetup() {
   setTimeout(() => {
     document.getElementById("playersetup").classList.remove("hidden");
   }, 5000);
+
 }
 
 // =============================
@@ -40,7 +46,9 @@ export function transitionToSetup() {
 // =============================
 
 export function transitionToGameplay() {
+  setCurrentSection("gameplay");
   console.log("transitionToSetup called");
+    document.getElementById("welcome").classList.add("hidden");
   document.getElementById("setup").classList.add("hidden");
   document.getElementById("gameplay").classList.remove("hidden");
 }

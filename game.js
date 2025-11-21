@@ -5,10 +5,35 @@ import * as display from "./display.js";
 // 1. SELECT MODE
 // =========================
 
-display.hideSectionsInitially();
-
 let mode = null;
 let scenario = null;
+
+display.hideSectionsInitially();
+const savedSection = localStorage.getItem("currentSection");
+const savedMode = localStorage.getItem("gameMode");
+
+if (savedSection) {
+  if (savedSection === "setup" && savedMode) {
+    mode = savedMode;
+    scenario = gameScenario[mode];
+    display.transitionToSetup();
+    restoreSetupState();
+  } else if (savedSection === "gameplay") {
+    mode = savedMode;
+    scenario = gameScenario[mode];
+    display.transitionToGameplay();
+    showPlayers();
+    placeAvatars();
+
+    const turnsHeading = document.querySelector("#players-section h2");
+    if (turnsHeading) {
+      turnsHeading.style.fontFamily =
+        mode === "adults"
+          ? '"Oooh Baby", Georgia, "Times New Roman", Times, serif'
+          : '"Reenie Beanie", "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif';
+    }
+  }
+}
 
 const modeAdults = document.querySelector("#adult-mode");
 const modeKids = document.querySelector("#kids-mode");
@@ -21,8 +46,7 @@ function selectMode(selectedMode) {
   mode = selectedMode;
   scenario = gameScenario[mode];
 
-  /*   localStorage.clear(); make it more specific
-   */ localStorage.setItem("gameMode", mode);
+  localStorage.setItem("gameMode", mode);
 
   document.getElementById("intro1").style.fontFamily =
     mode === "adults"
@@ -42,6 +66,18 @@ function selectMode(selectedMode) {
 // Shows / hides play button section untill a name has been entered
 const inputs = document.querySelectorAll('#playersetup input[type="text"]');
 const playButtonSection = document.getElementById("startgamebutton");
+
+function restoreSetupState() {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+  if (players.length > 0) {
+    for (let i = 0; i < inputs.length; i++) {
+      if (players[i]) {
+        inputs[i].value = players[i].name;
+      }
+    }
+    playButtonSection.classList.remove("hidden");
+  }
+}
 
 inputs.forEach((input) => {
   input.addEventListener("input", checkInputs);
@@ -270,6 +306,10 @@ function showPopup(type) {
     itemListLabel.textContent = scenario.prompts.list_items;
     content.appendChild(itemListLabel);
 
+    const grid = document.createElement("div");
+    grid.classList.add("guess-grid");
+    content.appendChild(grid);
+
     for (let i = 0; i < scenario.items.length; i++) {
       const item = scenario.items[i];
       const div = document.createElement("div");
@@ -280,7 +320,7 @@ function showPopup(type) {
         .toLowerCase()
         .replace(/\s+/g, "_")}.png" alt="${item}">
       <h3>${item}</h3>`;
-      content.appendChild(div);
+      grid.appendChild(div);
       div.addEventListener("click", () => guessItem(item));
     }
   }
@@ -537,13 +577,19 @@ function guessSuspect(suspect) {}
 function guessItem(item) {}
 function handleFinalGuess() {}
 
+// RESET GAME
 function resetGame() {
+  // Clear local storage
+  localStorage.removeItem("currentSection");
+  localStorage.removeItem("players");
+  localStorage.removeItem("mystery");
+  localStorage.removeItem("gameMode");
+
   // Reset variables, classes etc.
   window.location.reload();
-
-  // TO-DO Clear localStorage
 }
 
+// HANDLE TURNS
 function handleTurn() {
   const players = JSON.parse(localStorage.getItem("players")) || [];
   if (players.length === 0) {
