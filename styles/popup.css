@@ -48,6 +48,22 @@
   justify-items: center;
 }
 
+.final-guess-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  justify-content: space-around;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.final-guess-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
 .final-guess-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -55,8 +71,27 @@
   justify-items: center;
 }
 
-.final-guess-grid img {
-  height: 50px;
+.final-guess-display {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 130px;
+  width: 180px;
+  padding: 10px;
+}
+
+.final-guess-display img {
+  height: 60px;
+  object-fit: contain;
+  display: block;
+}
+
+.final-guess-submit-btn {
+  height: 60px;
   object-fit: contain;
   display: block;
 }
@@ -77,7 +112,7 @@
   display: block;
 }
 
-.guess-display .selected {
+.selected {
   border: 3px solid var(--c-canvas-highlight);
   border-radius: 3px;
 }
@@ -86,6 +121,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: 100%;
 }
 
 .flex-row img {

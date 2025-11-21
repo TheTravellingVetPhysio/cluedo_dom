@@ -280,6 +280,24 @@ function showPopup(type) {
   const content = document.getElementById("popup-content");
   content.innerHTML = "";
 
+  function closePopup() {
+    const popup = document.getElementById("popup");
+    const overlay = document.getElementById("overlay");
+    popup.classList.add("hidden");
+    overlay.classList.add("hidden");
+  }
+
+  function handleEsc(event) {
+    if (event.key === "Escape") {
+      closePopup();
+      document.removeEventListener("keydown", handleEsc);
+    }
+  }
+
+  document.addEventListener("keydown", handleEsc);
+  overlay.addEventListener("click", closePopup);
+  document.getElementById("popup-close").addEventListener("click", closePopup);
+
   // Partial guess on suspect
   if (type === "suspects") {
     title.textContent = scenario.prompts.guess_suspect;
@@ -394,29 +412,34 @@ function showPopup(type) {
       }
     }
 
+    const guessWrapper = document.createElement("div");
+    guessWrapper.classList.add("final-guess-wrapper");
+
     // Render suspects
     const suspectsContainer = document.createElement("div");
-    suspectsContainer.classList.add("final-guess-grid");
-
-    const suspectListLabel = document.createElement("p");
+    suspectsContainer.classList.add("final-guess-flex");
+    const suspectListLabel = document.createElement("h3");
     suspectListLabel.textContent = scenario.prompts.list_suspects;
+    const suspectsList = document.createElement("div");
+    suspectsList.classList.add("final-guess-grid");
     suspectsContainer.appendChild(suspectListLabel);
-    content.appendChild(suspectsContainer);
+    suspectsContainer.appendChild(suspectsList);
 
     for (let i = 0; i < scenario.suspects.length; i++) {
       const suspect = scenario.suspects[i];
       const suspectDiv = document.createElement("div");
-      suspectDiv.classList.add("guess-display");
+      suspectDiv.classList.add("final-guess-display");
       suspectDiv.dataset.suspect = suspect;
       suspectDiv.innerHTML = `
       <img src="media/${suspect
         .toLowerCase()
         .replace(/\s+/g, "_")}.png" alt="${suspect}">
-        <h3>${suspect}</h3>`;
+        <p>${suspect}</p>`;
 
       suspectDiv.addEventListener("click", () => {
-        const suspectList =
-          suspectsContainer.querySelectorAll(".guess-display");
+        const suspectList = suspectsContainer.querySelectorAll(
+          ".final-guess-display"
+        );
         for (let j = 0; j < suspectList.length; j++) {
           // Removes the selected from any other suspects, that might have been selected earlier
           suspectList[j].classList.remove("selected");
@@ -426,30 +449,34 @@ function showPopup(type) {
         localStorage.setItem("finalGuessSuspect", suspect);
         showSubmitButton();
       });
-      suspectsContainer.appendChild(suspectDiv);
+      suspectsList.appendChild(suspectDiv);
     }
 
     // Render items
     const itemsContainer = document.createElement("div");
-    itemsContainer.classList.add("final-guess-grid");
-
-    const itemListLabel = document.createElement("p");
+    itemsContainer.classList.add("final-guess-flex");
+    const itemListLabel = document.createElement("h3");
     itemListLabel.textContent = scenario.prompts.list_items;
+    const itemsList = document.createElement("div");
+    itemsList.classList.add("final-guess-grid");
     itemsContainer.appendChild(itemListLabel);
+    itemsContainer.appendChild(itemsList);
 
     for (let i = 0; i < scenario.items.length; i++) {
       const item = scenario.items[i];
       const itemDiv = document.createElement("div");
-      itemDiv.classList.add("guess-display");
+      itemDiv.classList.add("final-guess-display");
       itemDiv.dataset.item = item;
       itemDiv.innerHTML = `
       <img src="media/${item
         .toLowerCase()
         .replace(/\s+/g, "_")}.png" alt="${item}">
-        <h3>${item}</h3>`;
+        <p>${item}</p>`;
 
       itemDiv.addEventListener("click", () => {
-        const itemList = itemsContainer.querySelectorAll(".guess-display");
+        const itemList = itemsContainer.querySelectorAll(
+          ".final-guess-display"
+        );
         for (let j = 0; j < itemList.length; j++) {
           // Removes the selected from any other items, that might have been selected earlier
           itemList[j].classList.remove("selected");
@@ -459,11 +486,13 @@ function showPopup(type) {
         localStorage.setItem("finalGuessItem", item);
         showSubmitButton();
       });
-      itemsContainer.appendChild(itemDiv);
+      itemsList.appendChild(itemDiv);
     }
 
-    content.appendChild(itemsContainer);
-    content.appendChild(submit);
+    guessWrapper.appendChild(itemsContainer);
+    guessWrapper.appendChild(suspectsContainer);
+    guessWrapper.appendChild(submit);
+    content.appendChild(guessWrapper);
     submit.addEventListener("click", () => handleFinalGuess());
   }
 
@@ -537,8 +566,10 @@ function showPopup(type) {
 
   // Reset confirmation
   else if (type === "reset") {
-    title.textContent =
-      "Are you sure you want to reset the game & lose your progress?";
+    title.textContent = "Are you sure you want to reset the game?";
+    const progress = document.createElement("p");
+    progress.textContent =
+      "You will loose all your detectives and game progress.";
     const resetDiv = document.createElement("div");
     resetDiv.classList.add("flex-row");
     const yes = document.createElement("img");
@@ -549,13 +580,12 @@ function showPopup(type) {
     no.alt = "No, keep the game";
     resetDiv.appendChild(yes);
     resetDiv.appendChild(no);
+    content.appendChild(progress);
     content.appendChild(resetDiv);
 
-    yes.addEventListener("click", () => resetGame());
-    no.addEventListener("click", () => {
-      popup.classList.add("hidden");
-    });
-  }
+    yes.addEventListener("click", resetGame);
+    no.addEventListener("click", closePopup);
+    }
 
   // Times up
   else if (type === "times-up") {
@@ -573,11 +603,6 @@ function showPopup(type) {
 
     reset.addEventListener("click", () => resetGame());
   }
-
-  document.getElementById("popup-close").addEventListener("click", () => {
-    document.getElementById("popup").classList.add("hidden");
-    document.getElementById("overlay").classList.add("hidden");
-  });
 }
 
 function guessSuspect(suspect) {}
