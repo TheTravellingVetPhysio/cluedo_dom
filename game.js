@@ -9,6 +9,8 @@ let mode = null;
 let scenario = null;
 
 display.hideSectionsInitially();
+initTurnCounter();
+
 const savedSection = localStorage.getItem("currentSection");
 const savedMode = localStorage.getItem("gameMode");
 
@@ -17,6 +19,7 @@ if (savedSection) {
     mode = savedMode;
     scenario = gameScenario[mode];
     display.transitionToSetup();
+    runIntro();
     restoreSetupState();
   } else if (savedSection === "gameplay") {
     mode = savedMode;
@@ -47,6 +50,12 @@ function selectMode(selectedMode) {
   scenario = gameScenario[mode];
 
   localStorage.setItem("gameMode", mode);
+  display.transitionToSetup();
+  runIntro();
+}
+
+function runIntro() {
+  if (!scenario) return;
 
   document.getElementById("intro1").style.fontFamily =
     mode === "adults"
@@ -55,8 +64,6 @@ function selectMode(selectedMode) {
   document.getElementById("intro1").innerHTML = scenario.prompts.intro1;
   document.getElementById("intro2").innerHTML = scenario.prompts.intro2;
   document.getElementById("intro3").innerHTML = scenario.prompts.intro3;
-
-  display.transitionToSetup();
 }
 
 // =========================
@@ -559,12 +566,12 @@ function showPopup(type) {
 
     content.appendChild(newcrime);
 
-    const replay = document.createElement("img");
-    replay.src = "media/reset.png";
-    replay.alt = "Reset the game";
-    content.appendChild(replay);
+    const reset = document.createElement("img");
+    reset.src = "media/reset.png";
+    reset.alt = "Reset the game";
+    content.appendChild(reset);
 
-    replay.addEventListener("click", () => resetGame());
+    reset.addEventListener("click", () => resetGame());
   }
 
   document.getElementById("popup-close").addEventListener("click", () => {
@@ -584,6 +591,7 @@ function resetGame() {
   localStorage.removeItem("players");
   localStorage.removeItem("mystery");
   localStorage.removeItem("gameMode");
+  localStorage.removeItem("turnsUsed");
 
   // Reset variables, classes etc.
   window.location.reload();
@@ -622,6 +630,21 @@ function handleTurn() {
 
   localStorage.setItem("players", JSON.stringify(players));
   showPlayers();
+
+  let turns = parseInt(localStorage.getItem("turnsUsed") || "0", 10);
+  turns++;
+  localStorage.setItem("turnsUsed", turns);
+  document.getElementById("turn-counter").textContent = turns;
+
+  if (turns === 50) {
+    showPopup("times-up");
+  }
+}
+
+// INITIATE TURN COUNTER FUNCTION
+function initTurnCounter() {
+  const savedTurns = localStorage.getItem("turnsUsed") || 0;
+  document.getElementById("turn-counter").textContent = savedTurns;
 }
 
 // =========================
