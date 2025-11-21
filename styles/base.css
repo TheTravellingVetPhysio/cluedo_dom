@@ -9,6 +9,7 @@
 :root {
   /* CHOSEN DESIGN COLORS */
   --c-cluedo-brown: hsl(30, 58%, 53%);
+  --c-cluedo-dark-brown: hsl(27, 37%, 27%);
   --c-light-text: hsl(0, 0%, 0%);
 
   /* COLOR VARIABLES IN DOCUMENT */
@@ -19,7 +20,7 @@
   --c-button-face: var(--c-light-peach);
   --c-button-text: var(--c-light-text);
   --c-canvas-primary: var(--c-cluedo-brown);
-  --c-canvas-highlight: var(--c-light-periwrinkle);
+  --c-canvas-highlight: var(--c-cluedo-dark-brown);
   --c-canvas-text: var(--c-light-text);
   --c-link-active-text: ;
   --c-link-hover-text: ;

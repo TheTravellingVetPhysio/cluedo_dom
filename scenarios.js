@@ -32,7 +32,7 @@ export const gameScenario = {
         "Use your detective skills to research a weapon and the room you are in.",
       turn_solve_mystery:
         "Solve the mystery (but BEWARE! if your guess is wrong you are out)...", */
-      guess_weapons: "What do you think the murder weapon was?",
+      guess_item: "What do you think the murder weapon was?",
       guess_suspect: "Who do you think did the deed?",
       correct_two: "Your detective skills are pristine!",
       correct_room: (roomName) => `The crime happened in the ${roomName} and `,
@@ -52,7 +52,7 @@ export const gameScenario = {
         "Ouch! I guess your detective skills could use some more ... refinement... You're out!",
       all_eliminated:
         "All detectives have been eliminated... The mystery remains unsolved and the murderer/murderess goes free...",
-      mysterySolved: (winnerName, suspectName, roomName, itemName) =>
+      mystery_solved: (winnerName, suspectName, roomName, itemName) =>
         `YAY! Detective ${winnerName} solved the mystery! It was ${suspectName} in the ${roomName} with the ${itemName}.`,
       new_crime:
         "Time slipped through your fingers... and the killer didn't waste a second. Another body lies cold, and the mansion trembles with fear. A new mystery begins — will you stop the murderer before they strike again?",
@@ -98,7 +98,7 @@ export const gameScenario = {
         "Use your detective skills to research a toy and the room you are in.",
       turn_solve_mystery:
         "Solve the mystery (but BEWARE! if your guess is wrong you are out)...", */
-      guess_weapons: "Which toy do you think got broken?",
+      guess_item: "Which toy do you think got broken?",
       guess_suspect: "Who do you think caused the mischief?",
       correct_two: "Your detective skills are pristine!",
       correct_room: (roomName) => `The crime happened in the ${roomName} and `,
@@ -118,7 +118,7 @@ export const gameScenario = {
         "Oh no! That guess sent you on a wild goose chase. Time to let other detectives take the lead.",
       all_eliminated:
         "All detectives have been eliminated... The mystery remains unsolved...",
-      mysterySolved: (winnerName, suspectName, roomName, itemName) =>
+      mystery_solved: (winnerName, suspectName, roomName, itemName) =>
         `YAY! Detective ${winnerName} solved the mystery! It was ${suspectName} in the ${roomName} who broke ${itemName}.`,
       new_crime:
         "You ran out of time, detective! While you were thinking, another toy got smashed. Grab your magnifying glass — there's a new case to crack!",

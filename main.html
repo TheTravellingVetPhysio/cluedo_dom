@@ -155,7 +155,10 @@
               detective the game ends and the culprit goes free)!
             </p>
             <p>If your guess is correct you win and the culprit is caught.</p>
-            <p>If you want to reset the game you can at all times press the reset button.</p>
+            <p>
+              If you want to reset the game you can at all times press the reset
+              button.
+            </p>
           </div>
           <div id="actions">
             <img
@@ -173,16 +176,12 @@
               id="turn-final-guess"
               alt="Make your final guess"
             />
-               <img
-              src="media/reset.png"
-              id="reset"
-              alt="Reset game"
-            />
+            <img src="media/reset.png" id="reset" alt="Reset game" />
           </div>
           <div id="gameboard">
             <img src="media/clue_board.jpg" id="clue-board" />
             <div id="conservatory" data-room="Conservatory"></div>
-            <div id="ball_room"  data-room="Ball Room"></div>
+            <div id="ball_room" data-room="Ball Room"></div>
             <div id="kitchen" data-room="Kitchen"></div>
             <div id="billiard_room" data-room="Billiard Room"></div>
             <div id="library" data-room="Library"></div>
@@ -195,13 +194,19 @@
           <div id="players-section">
             <h2>Turns used:</h2>
             <h2>Players</h2>
-            <div id="player-list">
-            </div>
+            <div id="player-list"></div>
           </div>
         </div>
       </div>
 
-      <div id="results"></div>
+      <div id="popup">
+        <span id="popup-close">&times</span>
+        <h2 id="popup-title"></h2>
+        <div id="popup-content"></div>
+      </div>
+
+      <div id="overlay"></div>
+      
     </main>
   </body>
 </html>

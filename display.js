@@ -11,6 +11,8 @@ export function hideSectionsInitially() {
   document.getElementById("intro3").classList.add("hidden");
   document.getElementById("playersetup").classList.add("hidden");
   document.getElementById("startgamebutton").classList.add("hidden");
+  document.getElementById("popup").classList.add("hidden");
+
 }
 
 // =============================

@@ -1,0 +1,69 @@
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+#popup {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:  var(--c-canvas-primary);
+    border: 3px solid  var(--c-canvas-highlight);
+    border-radius: 20px;
+    z-index: 999;
+}
+
+#popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.guess-display {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.guess-display .selected {
+  border: 3px solid var(--c-canvas-highlight);
+  border-radius: 3px;
+}
+
+.final-guess-grid {
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flex-row img {
+  cursor: pointer;
+}
+
+.confetti img {
+  height: 100px;
+  width: 100px;
+  display: block;
+}
+
+.confetti img:first-of-type {
+  animation: pop 1s ease-in-out;
+}
+
+.confetti img:last-of-type {
+  cursor: pointer;
+}
