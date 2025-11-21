@@ -4,7 +4,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 998;
 }
 
@@ -14,13 +14,24 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 75%;
+    height: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
+align-items: center;
     background:  var(--c-canvas-primary);
     border: 3px solid  var(--c-canvas-highlight);
     border-radius: 20px;
+    padding: 20px; 
     z-index: 999;
+}
+
+#popup-close {
+position: absolute;
+top: 10px;
+right: 15px;
+font-size: 28px;
+font-weight: 600;
+cursor: pointer;
 }
 
 #popup-content {
@@ -30,10 +41,27 @@
   gap: 20px;
 }
 
+.guess-grid {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px; 
+  justify-items: center;
+}
+
 .guess-display {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.guess-display img {
+  height: 100px;
+  object-fit: contain;
+  display: block;
 }
 
 .guess-display .selected {
@@ -41,8 +69,6 @@
   border-radius: 3px;
 }
 
-.final-guess-grid {
-}
 
 .flex-row {
   display: flex;

@@ -229,7 +229,9 @@ function moveToRoom(roomName) {
 // POPUP FOR DIFFERENT ACTIONS
 function showPopup(type) {
   const popup = document.getElementById("popup");
+  const overlay = document.getElementById("overlay");
   popup.classList.remove("hidden");
+  overlay.classList.remove("hidden");
 
   const title = document.getElementById("popup-title");
   const content = document.getElementById("popup-content");
@@ -242,6 +244,10 @@ function showPopup(type) {
     suspectListLabel.textContent = scenario.prompts.list_suspects;
     content.appendChild(suspectListLabel);
 
+    const grid = document.createElement("div");
+    grid.classList.add("guess-grid");
+    content.appendChild(grid);
+
     for (let i = 0; i < scenario.suspects.length; i++) {
       const suspect = scenario.suspects[i];
       const div = document.createElement("div");
@@ -252,7 +258,7 @@ function showPopup(type) {
       .toLowerCase()
       .replace(/\s+/g, "_")}.png" alt="${suspect}">
       <h3>${suspect}</h3>`;
-      content.appendChild(div);
+      grid.appendChild(div);
       div.addEventListener("click", () => guessSuspect(suspect));
     }
   }
@@ -313,7 +319,7 @@ function showPopup(type) {
   }
 
   // Submit final guess popup
-  else if (type === "finalguess") {
+  else if (type === "final-guess") {
     content.innerHTML = "";
     localStorage.removeItem("finalGuessSuspect");
     localStorage.removeItem("finalGuessItem");
@@ -433,6 +439,7 @@ function showPopup(type) {
     setTimeout(() => {
       handleTurn();
       popup.classList.add("hidden");
+      document.getElementById("overlay").classList.add("hidden");
     }, 5000);
   }
 
@@ -519,10 +526,15 @@ function showPopup(type) {
 
     replay.addEventListener("click", () => resetGame());
   }
+
+  document.getElementById("popup-close").addEventListener("click", () => {
+    document.getElementById("popup").classList.add("hidden");
+    document.getElementById("overlay").classList.add("hidden");
+  });
 }
 
-function guessSuspect() {}
-function guessItem() {}
+function guessSuspect(suspect) {}
+function guessItem(item) {}
 function handleFinalGuess() {}
 
 function resetGame() {
@@ -537,7 +549,7 @@ function handleTurn() {
   if (players.length === 0) {
     showPopup("all-eliminated");
     return;
-  };
+  }
 
   let currentPlayerIndex = -1;
 
@@ -564,8 +576,7 @@ function handleTurn() {
 
   localStorage.setItem("players", JSON.stringify(players));
   showPlayers();
-};
-
+}
 
 // =========================
 // 4. CLICK-EVENTS
@@ -576,3 +587,17 @@ document.querySelectorAll("[data-room]").forEach((el) => {
     moveToRoom(e.target.dataset.room);
   });
 });
+
+document
+  .getElementById("turn-research-suspect")
+  .addEventListener("click", () => showPopup("suspects"));
+document
+  .getElementById("turn-research-item")
+  .addEventListener("click", () => showPopup("items"));
+document
+  .getElementById("turn-final-guess")
+  .addEventListener("click", () => showPopup("final-guess"));
+
+document
+  .getElementById("reset")
+  .addEventListener("click", () => showPopup("reset"));
