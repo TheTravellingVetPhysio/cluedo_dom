@@ -101,7 +101,7 @@ function checkInputs() {
   }
 }
 
-// Setup mystery - pick random suspect, room and item
+// SETUP MYSTERY - pick random suspect, room and item
 function setupMystery() {
   if (!scenario) {
     throw new Error(`Invalid mode: ${mode}`);
@@ -119,7 +119,7 @@ function setupMystery() {
   return mystery;
 }
 
-// Collect player data, set game values & start game
+// COLLECT PLAYER DATA, set game values & start game
 const playButton = document.getElementById("btn-play");
 
 playButton.addEventListener("click", () => {
@@ -136,6 +136,7 @@ playButton.addEventListener("click", () => {
         isCurrentTurn: index === 0,
       };
     });
+
   localStorage.setItem("players", JSON.stringify(players));
   console.log("Players saved: ", players);
 
@@ -150,6 +151,14 @@ playButton.addEventListener("click", () => {
 
   showPlayers();
   placeAvatars();
+});
+
+document.addEventListener("keydown", (event) => {
+  // Check if Enter is pressed and the play button is visible
+  if (event.key === "Enter" && !playButton.classList.contains("hidden")) {
+    event.preventDefault(); // Prevent form submission if inside a form
+    playButton.click(); // Trigger the same logic as clicking the button
+  }
 });
 
 // =========================
@@ -270,7 +279,7 @@ function moveToRoom(roomName) {
 }
 
 // POPUP FOR DIFFERENT ACTIONS
-function showPopup(type) {
+function showPopup(type, data = {}) {
   const popup = document.getElementById("popup");
   const overlay = document.getElementById("overlay");
   popup.classList.remove("hidden");
@@ -285,6 +294,9 @@ function showPopup(type) {
     const overlay = document.getElementById("overlay");
     popup.classList.add("hidden");
     overlay.classList.add("hidden");
+
+    title.innerHTML = "";
+    content.innerHTML = "";
   }
 
   function handleEsc(event) {
@@ -298,11 +310,41 @@ function showPopup(type) {
   overlay.addEventListener("click", closePopup);
   document.getElementById("popup-close").addEventListener("click", closePopup);
 
+  // Move to room first error
+  if (type === "move-to-room") {
+    title.textContent = "Go to a room first";
+    content.innerHTML = `<p>To make a guess you need to be in a room.<br>The room you are in always figures as the room you are guessing on.
+    </p>`;
+  }
+
+   // Already in room error
+  if (type === "already-in-room") {
+    title.textContent = "You are already in this room";
+    content.innerHTML = `<p>Choose another room or another action for your turn.
+    </p>`;
+  }
+
   // Partial guess on suspect
   if (type === "suspects") {
     title.textContent = scenario.prompts.guess_suspect;
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+
+    let currentPlayer = null;
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].isCurrentTurn) {
+        currentPlayer = players[i];
+        break;
+      }
+    }
+    if (!currentPlayer) {
+      console.error("No current player found!");
+      return;
+    }
+
+    const roomName = currentPlayer.position;
+
     const suspectListLabel = document.createElement("p");
-    suspectListLabel.textContent = scenario.prompts.list_suspects;
+    suspectListLabel.textContent = `You are researching the ${roomName} and a suspect. ${scenario.prompts.list_suspects}`;
     content.appendChild(suspectListLabel);
 
     const grid = document.createElement("div");
@@ -320,15 +362,33 @@ function showPopup(type) {
       .replace(/\s+/g, "_")}.png" alt="${suspect}">
       <h3>${suspect}</h3>`;
       grid.appendChild(div);
-      div.addEventListener("click", () => guessSuspect(suspect));
+      div.addEventListener("click", () => {
+        closePopup();
+        guessSuspect(suspect);
+      });
     }
   }
 
   // Partial guess on item
   else if (type === "items") {
     title.textContent = scenario.prompts.guess_item;
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+
+    let currentPlayer = null;
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].isCurrentTurn) {
+        currentPlayer = players[i];
+        break;
+      }
+    }
+    if (!currentPlayer) {
+      console.error("No current player found!");
+      return;
+    }
+
+    const roomName = currentPlayer.position;
     const itemListLabel = document.createElement("p");
-    itemListLabel.textContent = scenario.prompts.list_items;
+    itemListLabel.textContent = `You are researching the ${roomName} and an item. ${scenario.prompts.list_items}`;
     content.appendChild(itemListLabel);
 
     const grid = document.createElement("div");
@@ -346,41 +406,61 @@ function showPopup(type) {
         .replace(/\s+/g, "_")}.png" alt="${item}">
       <h3>${item}</h3>`;
       grid.appendChild(div);
-      div.addEventListener("click", () => guessItem(item));
+      div.addEventListener("click", () => {
+        closePopup();
+        guessItem(item);
+      });
     }
   }
 
   // If both elements of partial guesses are correct
   else if (type === "correcttwo") {
     title.innerHTML = scenario.prompts.correct_two;
+
+    const img = document.createElement("img");
+    img.src = "media/correcttwo.png";
+    img.alt = "Two correct";
+    content.appendChild(img);
+
     let details = "";
 
-    if (correctRoom) {
-      details += scenario.prompts.correct_room(mystery.room);
+    if (data.correctRoom) {
+      details += scenario.prompts.correct_room(data.mystery.room);
+    }
+    if (data.correctSuspect) {
+      details += scenario.prompts.correct_suspect(data.mystery.suspect);
+    }
+    if (data.correctItem) {
+      details += scenario.prompts.correct_item(data.mystery.item);
     }
 
-    if (correctSuspect) {
-      details += scenario.prompts.correct_suspect(mystery.suspect);
-    }
-
-    if (correctItem) {
-      details += scenario.prompts.correct_item(mystery.item);
-    }
-
-    content.innerHTML = `<img src="media/correcttwo.png" alt="Two correct">
-    <p>${details}</p>`;
+    const detailsParagraph = document.createElement("p");
+    detailsParagraph.textContent = details;
+    content.appendChild(detailsParagraph);
   }
 
   // If one element of partial guess is correct
   else if (type === "correctone") {
-    title.textContent = scenario.prompts.correct_one;
-    content.innerHTML = `<img src="media/correctone.png" alt="One correct">`;
+    title.textContent = "One right!";
+    const img = document.createElement("img");
+    img.src = "media/correctone.png";
+    img.alt = "One correct";
+    content.appendChild(img);
+    const prompt = document.createElement("p");
+    prompt.textContent = scenario.prompts.correct_one;
+    content.appendChild(prompt);
   }
 
   // If no elements of partial guess is correct
   else if (type === "correctnone") {
-    title.textContent = scenario.prompts.correct_none;
-    content.innerHTML = `<img src="media/correctnone.png" alt="One correct">`;
+    title.textContent = "Whooops! Your guess was wrong";
+    const img = document.createElement("img");
+    img.src = "media/correctnone.png";
+    img.alt = "None correct";
+    content.appendChild(img);
+    const prompt = document.createElement("p");
+    prompt.textContent = scenario.prompts.correct_none;
+    content.appendChild(prompt);
   }
 
   // Submit final guess popup
@@ -393,7 +473,25 @@ function showPopup(type) {
     const disclaimer = document.createElement("p");
     disclaimer.textContent =
       "You only have ONE final guess! Choose carefully...";
-    content.appendChild(disclaimer);
+
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+
+    let currentPlayer = null;
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].isCurrentTurn) {
+        currentPlayer = players[i];
+        break;
+      }
+    }
+    if (!currentPlayer) {
+      console.error("No current player found!");
+      return;
+    }
+
+    const roomName = currentPlayer.position;
+    const guess = document.createElement("p");
+    guess.textContent = `You are guessing on the ${roomName}. Choose a suspect and an item below:`;
+    content.appendChild(guess);
 
     // Add submit button
     const submit = document.createElement("img");
@@ -489,17 +587,32 @@ function showPopup(type) {
       itemsList.appendChild(itemDiv);
     }
 
+    const submitDiv = document.createElement("div");
+    submitDiv.appendChild(disclaimer);
+    submitDiv.appendChild(submit);
+
     guessWrapper.appendChild(itemsContainer);
     guessWrapper.appendChild(suspectsContainer);
-    guessWrapper.appendChild(submit);
+    guessWrapper.appendChild(submitDiv);
     content.appendChild(guessWrapper);
-    submit.addEventListener("click", () => handleFinalGuess());
+    submit.addEventListener("click", () => {
+      closePopup();
+      handleFinalGuess();
+    });
   }
 
   // Final guess wrong
   else if (type === "final-guess-wrong") {
-    title.textContent = scenario.prompts.eliminate_player;
-    content.innerHTML = `<img src="media/no.png">`;
+    title.textContent = "You guess is wrong";
+    const promptParagraph = document.createElement("p");
+    promptParagraph.textContent = scenario.prompts.eliminate_player;
+    content.appendChild(promptParagraph);
+    const img = document.createElement("img");
+    img.src = "media/no.png";
+    img.alt = "Wrong guess";
+    content.appendChild(img);
+
+    eliminatePlayer();
 
     let countdown = 5;
     const timerText = document.createElement("p");
@@ -513,7 +626,6 @@ function showPopup(type) {
     }, 1000);
 
     setTimeout(() => {
-      handleTurn();
       popup.classList.add("hidden");
       document.getElementById("overlay").classList.add("hidden");
     }, 5000);
@@ -536,21 +648,24 @@ function showPopup(type) {
 
   // Mystery solved
   else if (type === "mystery-solved") {
-    title.textContent = scenario.prompts.mystery_solved(
-      winnerName,
-      suspectName,
-      roomName,
-      itemName
+    title.textContent = "You won the game!";
+    const winnerMessage = document.createElement("p");
+    winnerMessage.textContent = scenario.prompts.mystery_solved(
+      data.winnerName,
+      data.suspectName,
+      data.roomName,
+      data.itemName
     );
 
     content.classList.add("confetti");
-
     const confettiDiv = document.createElement("div");
     const confetti = document.createElement("img");
     confetti.src = "media/confetti.png";
     confetti.alt = "Confetti because you won the game!";
     confettiDiv.appendChild(confetti);
     content.appendChild(confettiDiv);
+
+    content.appendChild(winnerMessage);
 
     const replayDiv = document.createElement("h3");
     replayDiv.textContent =
@@ -585,7 +700,7 @@ function showPopup(type) {
 
     yes.addEventListener("click", resetGame);
     no.addEventListener("click", closePopup);
-    }
+  }
 
   // Times up
   else if (type === "times-up") {
@@ -605,21 +720,163 @@ function showPopup(type) {
   }
 }
 
-function guessSuspect(suspect) {}
-function guessItem(item) {}
-function handleFinalGuess() {}
+function guessSuspect(suspect) {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+  const mystery = JSON.parse(localStorage.getItem("mystery"));
 
-// RESET GAME
-function resetGame() {
-  // Clear local storage
-  localStorage.removeItem("currentSection");
-  localStorage.removeItem("players");
-  localStorage.removeItem("mystery");
-  localStorage.removeItem("gameMode");
-  localStorage.removeItem("turnsUsed");
+  if (!mystery) {
+    console.error("Mystery not found!");
+    return;
+  }
 
-  // Reset variables, classes etc.
-  window.location.reload();
+  let currentPlayer = null;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].isCurrentTurn) {
+      currentPlayer = players[i];
+      break;
+    }
+  }
+  if (!currentPlayer) {
+    console.error("No current player found!");
+    return;
+  }
+
+  if (suspect === mystery.suspect && currentPlayer.position === mystery.room) {
+    showPopup("correcttwo", {
+      correctRoom: true,
+      correctSuspect: true,
+      mystery,
+    });
+  } else if (
+    suspect !== mystery.suspect &&
+    currentPlayer.position !== mystery.room
+  ) {
+    showPopup("correctnone");
+  } else {
+    showPopup("correctone");
+  }
+
+  handleTurn();
+}
+
+function guessItem(item) {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+  const mystery = JSON.parse(localStorage.getItem("mystery"));
+
+  if (!mystery) {
+    console.error("Mystery not found!");
+    return;
+  }
+
+  let currentPlayer = null;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].isCurrentTurn) {
+      currentPlayer = players[i];
+      break;
+    }
+  }
+  if (!currentPlayer) {
+    console.error("No current player found!");
+    return;
+  }
+
+  if (item === mystery.item && currentPlayer.position === mystery.room) {
+    showPopup("correcttwo", {
+      correctRoom: true,
+      correctItem: true,
+      mystery,
+    });
+  } else if (item !== mystery.item && currentPlayer.position !== mystery.room) {
+    showPopup("correctnone");
+  } else {
+    showPopup("correctone");
+  }
+
+  handleTurn();
+}
+
+function handleFinalGuess() {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+  const mystery = JSON.parse(localStorage.getItem("mystery"));
+  const suspect = localStorage.getItem("finalGuessSuspect");
+  const item = localStorage.getItem("finalGuessItem");
+
+  if (!mystery) {
+    console.error("Mystery not found!");
+    return;
+  }
+
+  let currentPlayer = null;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].isCurrentTurn) {
+      currentPlayer = players[i];
+      break;
+    }
+  }
+  if (!currentPlayer) {
+    console.error("No current player found!");
+    return;
+  }
+
+  if (
+    item === mystery.item &&
+    currentPlayer.position === mystery.room &&
+    suspect === mystery.suspect
+  ) {
+    showPopup("mystery-solved", {
+      winnerName: currentPlayer.name,
+      suspectName: mystery.suspect,
+      roomName: mystery.room,
+      itemName: mystery.item,
+    });
+  } else {
+    showPopup("final-guess-wrong");
+  }
+}
+
+// ELIMINATE PLAYER & HANDLE TURN
+function eliminatePlayer() {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+
+  let currentPlayer = null;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].isCurrentTurn) {
+      currentPlayer = players[i];
+      break;
+    }
+  }
+  if (!currentPlayer) {
+    console.error("No current player found!");
+    return;
+  }
+
+  // Find next player to set turn
+  const nextIndex = (players.indexOf(currentPlayer) + 1) % players.length;
+
+  if (players.length > 0) {
+    for (let i = 0; i < players.length; i++) {
+      players[i].isCurrentTurn = false;
+    }
+
+    players[nextIndex % players.length].isCurrentTurn = true;
+  }
+
+  // New player list to save to localStorage
+  const updatedPlayers = [];
+
+  for (let i = 0; i < players.length; i++) {
+    if (players[i] !== currentPlayer) {
+      updatedPlayers.push(players[i]);
+    }
+  }
+
+  if (updatedPlayers.length === 0) {
+    showPopup("all-eliminated");
+  }
+
+  localStorage.setItem("players", JSON.stringify(updatedPlayers));
+  showPlayers();
+  placeAvatars();
 }
 
 // HANDLE TURNS
@@ -661,7 +918,7 @@ function handleTurn() {
   localStorage.setItem("turnsUsed", turns);
   document.getElementById("turn-counter").textContent = turns;
 
-  if (turns === 50) {
+  if (turns === 20) {
     showPopup("times-up");
   }
 }
@@ -672,25 +929,115 @@ function initTurnCounter() {
   document.getElementById("turn-counter").textContent = savedTurns;
 }
 
+// RESET GAME
+function resetGame() {
+  // Clear local storage
+  localStorage.removeItem("currentSection");
+  localStorage.removeItem("players");
+  localStorage.removeItem("mystery");
+  localStorage.removeItem("gameMode");
+  localStorage.removeItem("turnsUsed");
+
+  // Reset variables, classes etc.
+  window.location.reload();
+}
+
 // =========================
 // 4. CLICK-EVENTS
 // =========================
 
 document.querySelectorAll("[data-room]").forEach((el) => {
   el.addEventListener("click", (e) => {
-    moveToRoom(e.target.dataset.room);
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+
+    let currentPlayer = null;
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].isCurrentTurn) {
+        currentPlayer = players[i];
+        break;
+      }
+    }
+
+    if (!currentPlayer) {
+      console.error("No current player found!");
+      return;
+    }
+
+    if (currentPlayer.position === e.currentTarget.dataset.room) {
+      showPopup("already-in-room");
+    } else {
+      moveToRoom(e.target.dataset.room);
+    }
   });
 });
 
 document
   .getElementById("turn-research-suspect")
-  .addEventListener("click", () => showPopup("suspects"));
-document
-  .getElementById("turn-research-item")
-  .addEventListener("click", () => showPopup("items"));
-document
-  .getElementById("turn-final-guess")
-  .addEventListener("click", () => showPopup("final-guess"));
+  .addEventListener("click", () => {
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+
+    let currentPlayer = null;
+    for (let i = 0; i < players.length; i++) {
+      if (players[i].isCurrentTurn) {
+        currentPlayer = players[i];
+        break;
+      }
+    }
+    if (!currentPlayer) {
+      console.error("No current player found!");
+      return;
+    }
+
+    if (currentPlayer.position === 0) {
+      showPopup("move-to-room");
+    } else {
+      showPopup("suspects");
+    }
+  });
+
+document.getElementById("turn-research-item").addEventListener("click", () => {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+
+  let currentPlayer = null;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].isCurrentTurn) {
+      currentPlayer = players[i];
+      break;
+    }
+  }
+  if (!currentPlayer) {
+    console.error("No current player found!");
+    return;
+  }
+
+  if (currentPlayer.position === 0) {
+    showPopup("move-to-room");
+  } else {
+    showPopup("items");
+  }
+});
+
+document.getElementById("turn-final-guess").addEventListener("click", () => {
+  const players = JSON.parse(localStorage.getItem("players")) || [];
+
+  let currentPlayer = 0;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].isCurrentTurn) {
+      currentPlayer = players[i];
+      break;
+    }
+  }
+  if (!currentPlayer) {
+    console.error("No current player found!");
+    return;
+  }
+
+  if (currentPlayer.position === 0) {
+    showPopup("move-to-room");
+  } else {
+    showPopup("final-guess");
+  }
+});
 
 document
   .getElementById("reset")
